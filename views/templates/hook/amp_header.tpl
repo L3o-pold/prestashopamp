@@ -1,0 +1,1 @@
+<link rel="amphtml" href="{if $force_ssl}{$base_dir_ssl}{else}{$base_dir}{/if}modules/amp/product?idProduct={$product->id}"/>

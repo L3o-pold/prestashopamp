@@ -1,0 +1,24 @@
+{
+  "name": "prestashop/odoo",
+  "description": "PrestaShop news module",
+  "authors": [
+    {
+      "name": "Paprika Agency",
+      "email": "contact@paprika-annecy.com"
+    },
+    {
+      "name": "Léopold Jacquot",
+      "email": "ljacquot@paprika-annecy.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "~2.3.4"
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "type": "prestashop-module"
+}
