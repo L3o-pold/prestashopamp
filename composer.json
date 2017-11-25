@@ -1,14 +1,10 @@
 {
-  "name": "prestashop/odoo",
-  "description": "PrestaShop news module",
+  "name": "l3o-pold/prestashopamp",
+  "description": "PrestaShop AMP module",
   "authors": [
     {
-      "name": "Paprika Agency",
-      "email": "contact@paprika-annecy.com"
-    },
-    {
       "name": "Léopold Jacquot",
-      "email": "ljacquot@paprika-annecy.com"
+      "email": "leopold.jacquot@gmail.com"
     }
   ],
   "require": {

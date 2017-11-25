@@ -1,11 +1,8 @@
 <?php
 
 /**
- * @todo    Hook product home/news/page
- *       Create tpl home/news/page
- *       Create scripts home/news/page
- * @package amp
- * @author  Léopold Jacquot {@link https://www.paprika-annecy.com}
+ * @package prestashopamp
+ * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
  */
 class Amp extends Module
 {
