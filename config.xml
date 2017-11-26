@@ -2,8 +2,8 @@
 <module>
 	<name>amp</name>
 	<displayName><![CDATA[AMP]]></displayName>
-	<version><![CDATA[1.0]]></version>
-	<description><![CDATA[This module add AMP to home, product and news page]]></description>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[This module add AMP to product]]></description>
 	<author><![CDATA[Leopold Jacquot]]></author>
 	<tab><![CDATA[]]></tab>
 	<is_configurable>0</is_configurable>

@@ -3,12 +3,18 @@
 require_once(dirname(__FILE__).'/../../../config/defines.inc.php');
 require_once(dirname(__FILE__).'/../../../config/config.inc.php');
 
-if (!Module::isInstalled('amp') || !isset($_GET['idProduct']) || intval($_GET['idProduct']) <= 0) {
+if (!Module::isInstalled('amp') || !intval(Tools::getValue('idProduct'))) {
     Controller::getController('PageNotFoundController')->run();
     exit;
 }
 
-$product = new Product((int) $_GET['idProduct'], false, Configuration::get('PS_LANG_DEFAULT'));
+if (in_array(Tools::getValue('lang'), LanguageCore::getIDs())) {
+    $id_lang = Tools::getValue('lang');
+} else {
+    $id_lang = Configuration::get('PS_LANG_DEFAULT');
+}
+
+$product = new Product((int) Tools::getValue('idProduct'), false, $id_lang);
 
 if (!Validate::isLoadedObject($product)) {
     Controller::getController('PageNotFoundController')->run();
@@ -18,12 +24,13 @@ if (!Validate::isLoadedObject($product)) {
 $smarty = Context::getContext()->smarty;
 $link   = new Link();
 
-$images         = $product->getImages((int) Configuration::get('PS_LANG_DEFAULT'));
+$images         = $product->getImages((int) $id_lang);
 $product_images = array();
 
 if (isset($images[0])) {
     $smarty->assign('mainImage', $images[0]);
 }
+
 foreach ($images as $k => $image) {
     if ($image['cover']) {
         $smarty->assign('mainImage', $image);
@@ -31,6 +38,7 @@ foreach ($images as $k => $image) {
         $cover['id_image']      = (Configuration::get('PS_LEGACY_IMAGES') ? ($product->id.'-'.$image['id_image'])
             : $image['id_image']);
         $cover['id_image_only'] = (int) $image['id_image'];
+        continue;
     }
     $product_images[(int) $image['id_image']] = $image;
 }
@@ -52,7 +60,7 @@ if (!isset($cover)) {
 $size = Image::getSize(ImageType::getFormatedName('large'));
 $smarty->assign(array(
     'have_image'  => (isset($cover['id_image']) && (int) $cover['id_image']) ? array((int) $cover['id_image'])
-        : Product::getCover((int) Tools::getValue('id_product')),
+        : Product::getCover((int) Tools::getValue('idProduct')),
     'cover'       => $cover,
     'imgWidth'    => (int) $size['width'],
     'mediumSize'  => Image::getSize(ImageType::getFormatedName('medium')),
@@ -61,6 +69,7 @@ $smarty->assign(array(
     'cartSize'    => Image::getSize(ImageType::getFormatedName('cart')),
     'col_img_dir' => _PS_COL_IMG_DIR_,
 ));
+
 if (count($product_images)) {
     $smarty->assign('images', $product_images);
 }

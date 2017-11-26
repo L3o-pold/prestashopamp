@@ -41,9 +41,9 @@
                             autoplay
                             delay="2000">
                         <amp-img
-                                src="//{$link->getImageLink($product->id, $cover.id_image)|escape:'html':'UTF-8'}"
-                                width="400"
-                                height="300"
+                                src="//{$link->getImageLink($product->id, $cover.id_image, 'large_default')|escape:'html':'UTF-8'}"
+                                width="{$largeSize['width']}"
+                                height="{$largeSize['height']}"
                                 alt="{if !empty($cover.legend)}{$cover.legend|escape:'html':'UTF-8'}{else}{$product->name|escape:'html':'UTF-8'}{/if}"
                                 layout="responsive">
                         </amp-img>
@@ -56,9 +56,9 @@
                                     {assign var=imageTitle value=$product->name|escape:'html':'UTF-8'}
                                 {/if}
                                 <amp-img
-                                        src="//{$link->getImageLink($product->link_rewrite, $imageIds, 'cart_default')|escape:'html':'UTF-8'}"
-                                        width="400"
-                                        height="300"
+                                        src="//{$link->getImageLink($product->link_rewrite, $imageIds, 'large_default')|escape:'html':'UTF-8'}"
+                                        width="{$largeSize['width']}"
+                                        height="{$largeSize['height']}"
                                         layout="responsive"
                                         alt="{$imageTitle}">
                         </amp-img>
@@ -72,7 +72,7 @@
                     {$product->name}
                     </a>
                 </h1>
-                <p>Reference: {$product->reference}</p>
+                <p>{l s='Reference' mod='amp'}: {$product->reference}</p>
                 <p>
                     {$product->description}
                 </p>
@@ -83,7 +83,7 @@
                 <p id="product-add-to-cart-amp">
                     {capture}add=1&amp;id_product={$product->id|intval}{if isset($static_token)}&amp;token={$static_token}{/if}{/capture}
                     <a href="{$link->getPageLink('cart', true, NULL, $smarty.capture.default, false)|escape:'html':'UTF-8'}" class="btn btn-primary">
-                    {l s='Buy now'}
+                    {l s='Buy now' mod='amp'}
                     </a>
                 </p>
             </div>
