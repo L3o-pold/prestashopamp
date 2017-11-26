@@ -17,17 +17,15 @@ class Amp extends Module
     public function __construct()
     {
         $this->name          = 'amp';
-        $this->version       = '1.0';
-        $this->author        = 'Paprika Agency';
+        $this->version       = '1.0.0';
+        $this->author        = 'Leopold Jacquot';
         $this->need_instance = 0;
         $this->bootstrap     = true;
 
         parent::__construct();
 
         $this->displayName = $this->l('AMP');
-        $this->description = $this->l(
-            'This module add AMP to home, product and news page'
-        );
+        $this->description = $this->l('This module add AMP to product');
     }
 
     /**
@@ -62,7 +60,10 @@ class Amp extends Module
         if (!Validate::isLoadedObject($product)) {
             return '';
         }
-        if (!$this->isCached('amp_header.tpl', $this->getCacheId('amp_header|'.(isset($product->id) && $product->id ? (int)$product->id : ''))))
+
+        $cacheId = 'amp_header|'.(isset($product->id) && $product->id ? (int)$product->id : '');
+
+        if (!$this->isCached('amp_header.tpl', $this->getCacheId($cacheId)))
         {
             $this->context->smarty->assign(array(
                 'product' => $product,
@@ -70,7 +71,6 @@ class Amp extends Module
             ));
         }
 
-        return $this->display(__FILE__, 'amp_header.tpl',
-            $this->getCacheId('socialsharing_header|'.(isset($product->id) && $product->id ? (int) $product->id : '')));
+        return $this->display(__FILE__, 'amp_header.tpl', $this->getCacheId($cacheId));
     }
 }
