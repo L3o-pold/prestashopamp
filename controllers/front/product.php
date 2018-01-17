@@ -18,6 +18,10 @@ class AmpProductModuleFrontController extends ModuleFrontController
 
         $product = new Product((int) Tools::getValue('idProduct'), false, $this->context->language->id);
 
+        if (!Validate::isLoadedObject($product)) {
+            Controller::getController('PageNotFoundController')->run();
+        }
+
         $link   = new Link();
 
         $images         = $product->getImages($this->context->language->id);
