@@ -51,24 +51,49 @@ class Amp extends Module
      */
     public function hookDisplayHeader($params)
     {
-        if (!isset($this->context->controller->php_self) || $this->context->controller->php_self != 'product') {
+        if (!isset($this->context->controller->php_self)) {
             return '';
         }
 
-        $product = $this->context->controller->getProduct();
+        switch ($this->context->controller->php_self) {
+            case 'product':
+                $product = $this->context->controller->getProduct();
 
-        if (!Validate::isLoadedObject($product)) {
-            return '';
+                if (!Validate::isLoadedObject($product)) {
+                    return '';
+                }
+
+                $cacheId = 'amp_header|product|'.$product->id;
+                $ampLink = $this->context->link->getModuleLink('amp', 'product', ['idProduct' => $product->id], true, $this->context->language->id, $this->context->shop->id, true);
+
+                break;
+
+            case 'category':
+                $category = $this->context->controller->getCategory();
+
+                if (!Validate::isLoadedObject($category)) {
+                    return '';
+                }
+
+                $cacheId = 'amp_header|category|'.$category->id;
+                $ampLink = $this->context->link->getModuleLink('amp', 'category', ['idCategory' => $category->id], true, $this->context->language->id, $this->context->shop->id, true);
+
+                break;
+
+            case 'index':
+                $cacheId = 'amp_header|index';
+                $ampLink = $this->context->link->getModuleLink('amp', 'home', [], true, $this->context->language->id, $this->context->shop->id, true);
+
+                break;
+
+            default:
+                return '';
+                break;
         }
-
-        $cacheId = 'amp_header|'.(isset($product->id) && $product->id ? (int)$product->id : '');
 
         if (!$this->isCached('amp_header.tpl', $this->getCacheId($cacheId)))
         {
-            $this->context->smarty->assign(array(
-                'product' => $product,
-                'link_rewrite' => isset($product->link_rewrite) && $product->link_rewrite ? $product->link_rewrite : '',
-            ));
+            $this->context->smarty->assign(array('amp_link' => $ampLink,));
         }
 
         return $this->display(__FILE__, 'amp_header.tpl', $this->getCacheId($cacheId));

@@ -1,3 +1,13 @@
+{if !isset($priceDisplayPrecision)}
+    {assign var='priceDisplayPrecision' value=2}
+{/if}
+{if !$priceDisplay || $priceDisplay == 2}
+    {assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, 6)}
+    {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(false, $smarty.const.NULL)}
+{elseif $priceDisplay == 1}
+    {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, 6)}
+    {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
+{/if}
 <!doctype html>
 <html amp>
     <head>
@@ -23,12 +33,12 @@
     <body>
         <div class="page-body-amp">
             <div class="header-column-amp">
-                <a href="{$link->getProductLink($product->id, $product->link_rewrite, $product->category)}">
-                    <amp-img src="{if $force_ssl}{$base_dir_ssl}{else}{$base_dir}{/if}{$logo_url}"
-                            width="600"
-                            height="99"
-                            id="shop-logo-amp"
-                            alt="Logo">
+                <a href="{$link->getPageLink('index')|escape:'html':'UTF-8'}">
+                    <amp-img src="{$logo_url|escape:'html':'UTF-8'}"
+                             width="250"
+                             height="99"
+                             id="shop-logo-amp"
+                             alt="{l s='Shop logo' mod='amp'}">
                     </amp-img>
                 </a>
             </div>
@@ -61,23 +71,20 @@
                                         height="{$largeSize['height']}"
                                         layout="responsive"
                                         alt="{$imageTitle}">
-                        </amp-img>
-                                </li>
+                                </amp-img>
                             {/foreach}
                         {/if}
                     </amp-carousel>
                 </div>
-                <h1 id="product-name-amp"><a
-                            href="http://prestashop.webkul.com/ps-rewardsystem/en/casual-dresses/3-printed-dress.html">
+                <h1 id="product-name-amp">
                     {$product->name}
-                    </a>
                 </h1>
                 <p>{l s='Reference' mod='amp'}: {$product->reference}</p>
                 <p>
                     {$product->description}
                 </p>
                 <p><span id="product-price-amp">
-                    ${$product->price|ceil}
+                    {convertPrice price=$productPrice|floatval}
                     </span>
                 </p>
                 <p id="product-add-to-cart-amp">

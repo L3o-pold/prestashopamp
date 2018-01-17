@@ -1,1 +1,3 @@
-.sass-cache
+.idea
+vendor
+config_*.xml
