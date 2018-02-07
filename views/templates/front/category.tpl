@@ -55,7 +55,9 @@
 	        {/if}
 	        <div class="width-full float-left">
 		        <div class="float-left pagination-text">
-					<span>{l s='Showing ' mod='amp'}{$currentStart|escape:'html':'UTF-8'} - {$currentStop|escape:'html':'UTF-8'}{l s=' of ' mod='amp'}{$nbProducts|escape:'html':'UTF-8'}{l s=' items.' mod='amp'}</span>
+					<span>
+						{l s='Showing ' mod='amp'} {$currentStart|escape:'html':'UTF-8'} - {$currentStop|escape:'html':'UTF-8'} {l s=' of ' mod='amp'} {$nbProducts|escape:'html':'UTF-8'} {l s=' items.' mod='amp'}
+					</span>
 				</div>
                 {if !isset($current_url)}
                     {assign var='requestPage' value=$link->getPaginationLink('category', $category, false, false, true, false)}
