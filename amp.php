@@ -24,7 +24,7 @@ class Amp extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('AMP');
+        $this->displayName = 'AMP';
         $this->description = $this->l('This module add AMP to product and category pages');
     }
 
