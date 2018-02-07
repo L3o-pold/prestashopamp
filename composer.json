@@ -1,10 +1,12 @@
 {
   "name": "l3o-pold/prestashopamp",
   "description": "PrestaShop AMP module",
+  "license": "MIT",
   "authors": [
     {
       "name": "Léopold Jacquot",
-      "email": "leopold.jacquot@gmail.com"
+      "email": "leopold.jacquot@gmail.com",
+      "homepage": "https://www.leopoldjacquot.com"
     }
   ],
   "require": {
