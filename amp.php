@@ -17,7 +17,7 @@ class Amp extends Module
     public function __construct()
     {
         $this->name          = 'amp';
-        $this->version       = '1.0.0';
+        $this->version       = '2.0.1';
         $this->author        = 'Leopold Jacquot';
         $this->need_instance = 0;
         $this->bootstrap     = true;
@@ -25,11 +25,12 @@ class Amp extends Module
         parent::__construct();
 
         $this->displayName = $this->l('AMP');
-        $this->description = $this->l('This module add AMP to product');
+        $this->description = $this->l('This module add AMP to product and category pages');
     }
 
     /**
      * @return bool
+     * @throws PrestaShopException
      */
     public function install()
     {
@@ -45,11 +46,9 @@ class Amp extends Module
     }
 
     /**
-     * @param $params
-     *
      * @return string
      */
-    public function hookDisplayHeader($params)
+    public function hookDisplayHeader()
     {
         if (!isset($this->context->controller->php_self)) {
             return '';

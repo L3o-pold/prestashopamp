@@ -74,9 +74,9 @@
 								</li>
                             {else}
 								<li id="pagination_previous{if isset($paginationId)}_{$paginationId|escape:'html':'UTF-8'}{/if}" class="disabled pagination_previous">
-				<span>
-					&lt; <b>{l s='Previous' mod='amp'}</b>
-				</span>
+									<span>
+										&lt; <b>{l s='Previous' mod='amp'}</b>
+									</span>
 								</li>
                             {/if}
                             {if $start==3}
@@ -105,17 +105,17 @@
 									</a>
 								</li>
 								<li class="truncate">
-				<span>
-					<span>...</span>
-				</span>
+									<span>
+										<span>...</span>
+									</span>
 								</li>
                             {/if}
                             {section name=pagination start=$start loop=$stop+1 step=1}
                                 {if $p == $smarty.section.pagination.index}
 									<li class="active current">
-					<span>
-						<span>{$p|escape:'html':'UTF-8'}</span>
-					</span>
+										<span>
+											<span>{$p|escape:'html':'UTF-8'}</span>
+										</span>
 									</li>
                                 {else}
 									<li>
@@ -127,9 +127,9 @@
                             {/section}
                             {if $pages_nb>$stop+2}
 								<li class="truncate">
-				<span>
-					<span>...</span>
-				</span>
+									<span>
+										<span>...</span>
+									</span>
 								</li>
 								<li>
 									<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">
@@ -165,9 +165,9 @@
 								</li>
                             {else}
 								<li id="pagination_next{if isset($paginationId)}_{$paginationId|escape:'quotes':'UTF-8'}{/if}" class="disabled pagination_next">
-				<span>
-					<b>{l s='Next' mod='amp'}</b> &gt;
-				</span>
+									<span>
+										<b>{l s='Next' mod='amp'}</b> &gt;
+									</span>
 								</li>
                             {/if}
 						</ul>
