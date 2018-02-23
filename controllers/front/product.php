@@ -80,7 +80,32 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign('cover', Product::getCover((int) $product->id));
         $this->context->smarty->assign('css', file_get_contents(__DIR__.'/../../css/amp.css'));
 
-        $this->setTemplate('product.tpl');
+        if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
+            $priceDisplay = Product::getTaxCalculationMethod((int) $this->context->cookie->id_customer);
+            $productPrice = 0;
+            $productPriceWithoutReduction = 0;
+
+            if (!$priceDisplay || $priceDisplay == 2) {
+                $productPrice = $product->getPrice(true, null, 6);
+                $productPriceWithoutReduction = $product->getPriceWithoutReduct(false, null);
+            } elseif ($priceDisplay == 1) {
+                $productPrice = $product->getPrice(false, null, 6);
+                $productPriceWithoutReduction = $product->getPriceWithoutReduct(true, null);
+            }
+
+            $this->context->smarty->assign(
+                array(
+                    'price' => $productPrice,
+                    'priceDisplay' => $priceDisplay,
+                    'productPriceWithoutReduction' => $productPriceWithoutReduction,
+                    'addToCartLink' => $link->getPageLink('cart', true, $this->context->language->id, ['add' => 1, 'id_product' => $product->id, 'token' => Tools::getToken(false)], false, $this->context->shop->id)
+                )
+            );
+
+            $this->setTemplate('module:amp/views/templates/front/product_17.tpl');
+        } else {
+            $this->setTemplate('product.tpl');
+        }
 
         parent::initContent();
     }

@@ -1,0 +1,205 @@
+<!doctype html>
+<html ⚡>
+	<head>
+		<meta charset="utf-8">
+		<title>
+            {$meta_datas['meta_title']}
+        </title>
+        <link rel="canonical" href="{$canonical}">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        {literal}
+			<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+			<script async src="https://cdn.ampproject.org/v0.js"></script>
+			<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+        {/literal}
+		<style amp-custom>
+            {$css}
+        </style>
+	</head>
+	<body>
+	<div class="page-body-amp">
+		<div class="header-column-amp">
+			<a href="{$urls.pages.index}">
+				<amp-img src="{$shop.logo}"
+					width="250"
+					height="99"
+					id="shop-logo-amp"
+					alt="{l s='Shop logo' mod='amp'}">
+				</amp-img>
+			</a>
+		</div>
+		<div class="page-content-amp">
+			{if $category->id_image}
+				<div id="category-image-amp">
+					<amp-img src="{url entity='categoryImage' id=$category->id_category name='category_default'}"
+						width="870"
+						height="217"
+						layout="responsive"
+						alt="{$category->name}"></amp-img>
+					</amp-carousel>
+				</div>
+			{/if}
+
+			{strip}
+				<h1 id="category-name-amp">
+					<a href="{url entity='category' id=$category->id_category id_lang=$language.id}">{$category->name}</a>
+				</h1>
+                {if isset($categoryNameComplement)}
+	                {$categoryNameComplement}
+	            {/if}
+	        {/strip}
+	        {if Tools::strlen($category->description) > 350}
+	            <div id="category_description_short" class="rte">{$description_short}</div>
+	            <div id="category_description_full" class="unvisible rte">{$category->description}</div>
+	            <a href="{url entity='category' id=$category->id_category id_lang=$language.id}" class="lnk_more">
+					{l s='More' mod='amp'}
+				</a>
+	        {else}
+	            <div class="rte width-full float-left">{$category->description nofilter}</div>
+	        {/if}
+	        <div class="width-full float-left">
+		        {*<div class="float-left pagination-text">*}
+					{*<span>*}
+						{*{l s='Showing ' mod='amp'} {$currentStart} - {$currentStop} {l s=' of ' mod='amp'} {$nbProducts} {l s=' items.' mod='amp'}*}
+					{*</span>*}
+				{*</div>*}
+                {*{if !isset($current_url)}*}
+                    {*{assign var='requestPage' value=$link->getPaginationLink('category', $category, false, false, true, false)}*}
+                {*{else}*}
+                    {*{assign var='requestPage' value=$current_url}*}
+                {*{/if}*}
+                {*{if $start!=$stop}*}
+					{*<div class="pagination-block">*}
+						{*<ul class="pagination">*}
+                            {*{if $p != 1}*}
+                                {*{assign var='p_previous' value=$p-1}*}
+								{*<li id="pagination_previous{if isset($paginationId)}_{$paginationId|escape:'quotes':'UTF-8'}{/if}" class="pagination_previous">*}
+									{*<a href="{$link->goPage($requestPage, $p_previous)|escape:'quotes':'UTF-8'}" rel="prev">*}
+										{*&lt; <b>{l s='Previous' mod='amp'}</b>*}
+									{*</a>*}
+								{*</li>*}
+                            {*{else}*}
+								{*<li id="pagination_previous{if isset($paginationId)}_{$paginationId}{/if}" class="disabled pagination_previous">*}
+									{*<span>*}
+										{*&lt; <b>{l s='Previous' mod='amp'}</b>*}
+									{*</span>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{if $start==3}*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, 1)|escape:'quotes':'UTF-8'}">*}
+										{*<span>1</span>*}
+									{*</a>*}
+								{*</li>*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, 2)|escape:'quotes':'UTF-8'}">*}
+										{*<span>2</span>*}
+									{*</a>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{if $start==2}*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, 1)|escape:'quotes':'UTF-8'}">*}
+										{*<span>1</span>*}
+									{*</a>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{if $start>3}*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, 1)|escape:'quotes':'UTF-8'}">*}
+										{*<span>1</span>*}
+									{*</a>*}
+								{*</li>*}
+								{*<li class="truncate">*}
+									{*<span>*}
+										{*<span>...</span>*}
+									{*</span>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{section name=pagination start=$start loop=$stop+1 step=1}*}
+                                {*{if $p == $smarty.section.pagination.index}*}
+									{*<li class="active current">*}
+										{*<span>*}
+											{*<span>{$p}</span>*}
+										{*</span>*}
+									{*</li>*}
+                                {*{else}*}
+									{*<li>*}
+										{*<a href="{$link->goPage($requestPage, $smarty.section.pagination.index)|escape:'quotes':'UTF-8'}">*}
+											{*<span>{$smarty.section.pagination.index}</span>*}
+										{*</a>*}
+									{*</li>*}
+                                {*{/if}*}
+                            {*{/section}*}
+                            {*{if $pages_nb>$stop+2}*}
+								{*<li class="truncate">*}
+									{*<span>*}
+										{*<span>...</span>*}
+									{*</span>*}
+								{*</li>*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">*}
+										{*<span>{$pages_nb|intval}</span>*}
+									{*</a>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{if $pages_nb==$stop+1}*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">*}
+										{*<span>{$pages_nb|intval}</span>*}
+									{*</a>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{if $pages_nb==$stop+2}*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, $pages_nb-1)|escape:'quotes':'UTF-8'}">*}
+										{*<span>{$pages_nb-1|intval}</span>*}
+									{*</a>*}
+								{*</li>*}
+								{*<li>*}
+									{*<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">*}
+										{*<span>{$pages_nb|intval}</span>*}
+									{*</a>*}
+								{*</li>*}
+                            {*{/if}*}
+                            {*{if $pages_nb > 1 AND $p != $pages_nb}*}
+                                {*{assign var='p_next' value=$p+1}*}
+								{*<li id="pagination_next{if isset($paginationId)}_{$paginationId}{/if}" class="pagination_next">*}
+									{*<a href="{$link->goPage($requestPage, $p_next)|escape:'quotes':'UTF-8'}" rel="next">*}
+										{*<b>{l s='Next' mod='amp'}</b> &gt;*}
+									{*</a>*}
+								{*</li>*}
+                            {*{else}*}
+								{*<li id="pagination_next{if isset($paginationId)}_{$paginationId|escape:'quotes':'UTF-8'}{/if}" class="disabled pagination_next">*}
+									{*<span>*}
+										{*<b>{l s='Next' mod='amp'}</b> &gt;*}
+									{*</span>*}
+								{*</li>*}
+                            {*{/if}*}
+						{*</ul>*}
+					{*</div>*}
+                {*{/if}*}
+			</div>
+            {foreach from=$catProducts item=product}
+				<div class="float-left product-header">
+					<div>
+						<amp-img src="{$link->getImageLink($product.link_rewrite, $product.id_image, 'home_default')}"
+								 width="80"
+								 height="80"
+								 layout="responsive"
+								 class="product-image-amp"
+								 alt="{$product.name}"></amp-img>
+					</div>
+					<h5 class="width-float product-name-amp">
+						<a href="{$product.link}" title="{$product.name}">
+                            {$product.name|truncate:40:'...'}
+						</a>
+					</h5>
+					{*<p class="product-price-amp"><span>{convertPrice price=($product.price)}</span></p>*}
+					<p class="product-add-to-cart-amp {if $product.quantity == 0} disabled {/if}"><a class="btn btn-primary" {if $product.quantity == 0} href="#" {else} href="{$product.addToCartLink}" {/if}>{l s='Add to Cart' mod='amp'}</a>
+				</div>
+            {/foreach}
+		</div>
+	</div>
+</body>
+</html>
