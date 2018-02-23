@@ -17,11 +17,11 @@ class Amp extends Module
     public function __construct()
     {
         $this->name          = 'amp';
-        $this->version       = '2.0.4';
+        $this->version       = '2.0.5';
         $this->author        = 'Leopold Jacquot';
         $this->need_instance = 0;
         $this->bootstrap     = true;
-        $this->ps_versions_compliancy = array('min' => '1.6', 'max' => '1.6.99.99');
+        $this->ps_versions_compliancy = array('min' => '1.6', 'max' => '1.7.99.99');
 
         parent::__construct();
 
