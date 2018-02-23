@@ -41,14 +41,19 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
 
 
         $this->nbProducts = $this->category->getProducts(null, null, null, $this->orderBy, $this->orderWay, true);
-        $this->pagination((int)$this->nbProducts); // Pagination must be call after "getProducts"
+        if (version_compare(_PS_VERSION_, '1.7.0', '<')) {
+            $this->pagination((int) $this->nbProducts); // Pagination must be call after "getProducts"
+        }
         $this->cat_products = $this->category->getProducts($this->context->language->id, (int)$this->p, (int)$this->n, $this->orderBy, $this->orderWay);
-        $currentStart = (($this->p-1)*$this->n)+1;
-        $currentStop = ($this->p*$this->n);
-        $currentStop = ($currentStop < $this->nbProducts) ? $currentStop : $this->nbProducts;
-        // in case when no product in category
-        if ($currentStop < $currentStart) {
-            $currentStart = $currentStop;
+
+        if (version_compare(_PS_VERSION_, '1.7.0', '<')) {
+            $currentStart = (($this->p-1)*$this->n)+1;
+            $currentStop = ($this->p*$this->n);
+            $currentStop = ($currentStop < $this->nbProducts) ? $currentStop : $this->nbProducts;
+            // in case when no product in category
+            if ($currentStop < $currentStart) {
+                $currentStart = $currentStop;
+            }
         }
 
         // if products available get product add to cart link
@@ -68,8 +73,10 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         $smartyVars['idCategory'] = $idCategory;
         $smartyVars['module_dir'] = _MODULE_DIR_;
         $smartyVars['category'] = $this->category;
-        $smartyVars['currentStop'] = $currentStop;
-        $smartyVars['currentStart'] = $currentStart;
+        if (version_compare(_PS_VERSION_, '1.7.0', '<')) {
+            $smartyVars['currentStop']  = $currentStop;
+            $smartyVars['currentStart'] = $currentStart;
+        }
         $smartyVars['nbProducts'] = $this->nbProducts;
         $smartyVars['catProducts'] = $this->cat_products;
         $smartyVars['categoryLink'] = $link->getCategoryLink($this->category, null, $idLang, null, $idShop);
@@ -89,7 +96,12 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign('meta_datas', Meta::getCategoryMetas($this->category->id, Context::getContext()->language->id, 'category'));
         $this->context->smarty->assign('css', file_get_contents(__DIR__.'/../../css/amp.css'));
 
-        $this->setTemplate('category.tpl');
+        if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
+            $this->setTemplate('module:amp/views/templates/front/category_17.tpl');
+        } else {
+            $this->setTemplate('category.tpl');
+        }
+
         parent::initContent();
     }
 }

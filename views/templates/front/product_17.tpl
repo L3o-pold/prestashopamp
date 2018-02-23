@@ -1,13 +1,3 @@
-{if !isset($priceDisplayPrecision)}
-    {assign var='priceDisplayPrecision' value=2}
-{/if}
-{if !$priceDisplay || $priceDisplay == 2}
-    {assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, 6)}
-    {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(false, $smarty.const.NULL)}
-{elseif $priceDisplay == 1}
-    {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, 6)}
-    {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
-{/if}
 <!doctype html>
 <html amp>
     <head>
@@ -33,8 +23,8 @@
     <body>
         <div class="page-body-amp">
             <div class="header-column-amp">
-                <a href="{$link->getPageLink('index')|escape:'html':'UTF-8'}">
-                    <amp-img src="{$logo_url|escape:'html':'UTF-8'}"
+                <a href="{$urls.pages.index}">
+                    <amp-img src="{$shop.logo}"
                              width="250"
                              height="99"
                              id="shop-logo-amp"
@@ -51,22 +41,22 @@
                             autoplay
                             delay="2000">
                         <amp-img
-                                src="//{$link->getImageLink($product->id, $cover.id_image, 'large_default')|escape:'html':'UTF-8'}"
+                                src="{$link->getImageLink($product->id, $cover.id_image, 'large_default')}"
                                 width="{$largeSize['width']}"
                                 height="{$largeSize['height']}"
-                                alt="{if !empty($cover.legend)}{$cover.legend|escape:'html':'UTF-8'}{else}{$product->name|escape:'html':'UTF-8'}{/if}"
+                                alt="{if !empty($cover.legend)}{$cover.legend}{else}{$product->name}{/if}"
                                 layout="responsive">
                         </amp-img>
                         {if isset($images) && count($images) > 0}
                             {foreach from=$images item=image name=thumbnails}
                                 {assign var=imageIds value="`$product->id`-`$image.id_image`"}
                                 {if !empty($image.legend)}
-                                    {assign var=imageTitle value=$image.legend|escape:'html':'UTF-8'}
+                                    {assign var=imageTitle value=$image.legend}
                                 {else}
-                                    {assign var=imageTitle value=$product->name|escape:'html':'UTF-8'}
+                                    {assign var=imageTitle value=$product->name}
                                 {/if}
                                 <amp-img
-                                        src="//{$link->getImageLink($product->link_rewrite, $imageIds, 'large_default')|escape:'html':'UTF-8'}"
+                                        src="{$link->getImageLink($product->link_rewrite, $imageIds, 'large_default')}"
                                         width="{$largeSize['width']}"
                                         height="{$largeSize['height']}"
                                         layout="responsive"
@@ -81,19 +71,20 @@
                 </h1>
                 <p>{l s='Reference' mod='amp'}: {$product->reference}</p>
                 <p>
-                    {$product->description}
+                    {$product->description nofilter}
                 </p>
                 <p>
                     <span id="product-price-amp">
-                        {convertPrice price=$productPrice|floatval}
+                        {$price} {$currency.sign}
                     </span>
                 </p>
-                <p id="product-add-to-cart-amp">
-                    {capture}add=1&amp;id_product={$product->id|intval}{if isset($static_token)}&amp;token={$static_token}{/if}{/capture}
-                    <a href="{$link->getPageLink('cart', true, NULL, $smarty.capture.default, false)|escape:'html':'UTF-8'}" class="btn btn-primary">
-                    {l s='Buy now' mod='amp'}
-                    </a>
-                </p>
+                {if !$configuration.is_catalog}
+                    <p id="product-add-to-cart-amp">
+                        <a href="{$addToCartLink}" class="btn btn-primary">
+                            {l s='Buy now' mod='amp'}
+                        </a>
+                    </p>
+                {/if}
             </div>
         </div>
     </body>
