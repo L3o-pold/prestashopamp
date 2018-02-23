@@ -1,4 +1,4 @@
-# Prestashop AMP module
+# Prestashop 1.6.x AMP module
 
 This module add AMP to your product and category pages for your Prestashop
 
