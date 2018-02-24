@@ -17,7 +17,7 @@ class Amp extends Module
     public function __construct()
     {
         $this->name          = 'amp';
-        $this->version       = '2.0.5';
+        $this->version       = '2.0.6';
         $this->author        = 'Leopold Jacquot';
         $this->need_instance = 0;
         $this->bootstrap     = true;
@@ -77,12 +77,6 @@ class Amp extends Module
 
                 $cacheId = 'amp_header|category|'.$category->id;
                 $ampLink = $this->context->link->getModuleLink('amp', 'category', ['idCategory' => $category->id], true, $this->context->language->id, $this->context->shop->id, true);
-
-                break;
-
-            case 'index':
-                $cacheId = 'amp_header|index';
-                $ampLink = $this->context->link->getModuleLink('amp', 'home', [], true, $this->context->language->id, $this->context->shop->id, true);
 
                 break;
 
