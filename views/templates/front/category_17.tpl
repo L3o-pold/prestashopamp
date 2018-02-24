@@ -49,137 +49,14 @@
 	            {/if}
 	        {/strip}
 	        {if Tools::strlen($category->description) > 350}
-	            <div id="category_description_short" class="rte">{$description_short}</div>
-	            <div id="category_description_full" class="unvisible rte">{$category->description}</div>
+	            <div id="category_description_short" class="rte">{$description_short nofilter}</div>
+	            <div id="category_description_full" class="unvisible rte">{$category->description nofilter}</div>
 	            <a href="{url entity='category' id=$category->id_category id_lang=$language.id}" class="lnk_more">
 					{l s='More' mod='amp'}
 				</a>
 	        {else}
 	            <div class="rte width-full float-left">{$category->description nofilter}</div>
 	        {/if}
-	        <div class="width-full float-left">
-		        {*<div class="float-left pagination-text">*}
-					{*<span>*}
-						{*{l s='Showing ' mod='amp'} {$currentStart} - {$currentStop} {l s=' of ' mod='amp'} {$nbProducts} {l s=' items.' mod='amp'}*}
-					{*</span>*}
-				{*</div>*}
-                {*{if !isset($current_url)}*}
-                    {*{assign var='requestPage' value=$link->getPaginationLink('category', $category, false, false, true, false)}*}
-                {*{else}*}
-                    {*{assign var='requestPage' value=$current_url}*}
-                {*{/if}*}
-                {*{if $start!=$stop}*}
-					{*<div class="pagination-block">*}
-						{*<ul class="pagination">*}
-                            {*{if $p != 1}*}
-                                {*{assign var='p_previous' value=$p-1}*}
-								{*<li id="pagination_previous{if isset($paginationId)}_{$paginationId|escape:'quotes':'UTF-8'}{/if}" class="pagination_previous">*}
-									{*<a href="{$link->goPage($requestPage, $p_previous)|escape:'quotes':'UTF-8'}" rel="prev">*}
-										{*&lt; <b>{l s='Previous' mod='amp'}</b>*}
-									{*</a>*}
-								{*</li>*}
-                            {*{else}*}
-								{*<li id="pagination_previous{if isset($paginationId)}_{$paginationId}{/if}" class="disabled pagination_previous">*}
-									{*<span>*}
-										{*&lt; <b>{l s='Previous' mod='amp'}</b>*}
-									{*</span>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{if $start==3}*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, 1)|escape:'quotes':'UTF-8'}">*}
-										{*<span>1</span>*}
-									{*</a>*}
-								{*</li>*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, 2)|escape:'quotes':'UTF-8'}">*}
-										{*<span>2</span>*}
-									{*</a>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{if $start==2}*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, 1)|escape:'quotes':'UTF-8'}">*}
-										{*<span>1</span>*}
-									{*</a>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{if $start>3}*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, 1)|escape:'quotes':'UTF-8'}">*}
-										{*<span>1</span>*}
-									{*</a>*}
-								{*</li>*}
-								{*<li class="truncate">*}
-									{*<span>*}
-										{*<span>...</span>*}
-									{*</span>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{section name=pagination start=$start loop=$stop+1 step=1}*}
-                                {*{if $p == $smarty.section.pagination.index}*}
-									{*<li class="active current">*}
-										{*<span>*}
-											{*<span>{$p}</span>*}
-										{*</span>*}
-									{*</li>*}
-                                {*{else}*}
-									{*<li>*}
-										{*<a href="{$link->goPage($requestPage, $smarty.section.pagination.index)|escape:'quotes':'UTF-8'}">*}
-											{*<span>{$smarty.section.pagination.index}</span>*}
-										{*</a>*}
-									{*</li>*}
-                                {*{/if}*}
-                            {*{/section}*}
-                            {*{if $pages_nb>$stop+2}*}
-								{*<li class="truncate">*}
-									{*<span>*}
-										{*<span>...</span>*}
-									{*</span>*}
-								{*</li>*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">*}
-										{*<span>{$pages_nb|intval}</span>*}
-									{*</a>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{if $pages_nb==$stop+1}*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">*}
-										{*<span>{$pages_nb|intval}</span>*}
-									{*</a>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{if $pages_nb==$stop+2}*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, $pages_nb-1)|escape:'quotes':'UTF-8'}">*}
-										{*<span>{$pages_nb-1|intval}</span>*}
-									{*</a>*}
-								{*</li>*}
-								{*<li>*}
-									{*<a href="{$link->goPage($requestPage, $pages_nb)|escape:'quotes':'UTF-8'}">*}
-										{*<span>{$pages_nb|intval}</span>*}
-									{*</a>*}
-								{*</li>*}
-                            {*{/if}*}
-                            {*{if $pages_nb > 1 AND $p != $pages_nb}*}
-                                {*{assign var='p_next' value=$p+1}*}
-								{*<li id="pagination_next{if isset($paginationId)}_{$paginationId}{/if}" class="pagination_next">*}
-									{*<a href="{$link->goPage($requestPage, $p_next)|escape:'quotes':'UTF-8'}" rel="next">*}
-										{*<b>{l s='Next' mod='amp'}</b> &gt;*}
-									{*</a>*}
-								{*</li>*}
-                            {*{else}*}
-								{*<li id="pagination_next{if isset($paginationId)}_{$paginationId|escape:'quotes':'UTF-8'}{/if}" class="disabled pagination_next">*}
-									{*<span>*}
-										{*<b>{l s='Next' mod='amp'}</b> &gt;*}
-									{*</span>*}
-								{*</li>*}
-                            {*{/if}*}
-						{*</ul>*}
-					{*</div>*}
-                {*{/if}*}
-			</div>
             {foreach from=$catProducts item=product}
 				<div class="float-left product-header">
 					<div>
