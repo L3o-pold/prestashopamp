@@ -25,6 +25,8 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
 
         $this->category = new Category($idCategory, $idLang, $idShop);
 
+        $this->category->clean_description = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $this->category->description);
+
         if (!Validate::isLoadedObject($this->category)) {
             Controller::getController('PageNotFoundController')->run();
         }
@@ -60,6 +62,26 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         if ($this->cat_products) {
             foreach ($this->cat_products as &$product) {
                 $product['addToCartLink'] = $link->getPageLink('cart', true, $idLang, ['add' => 1, 'id_product' => $product['id_product'], 'token' => Tools::getToken(false)], false, $idShop);
+
+                if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
+                    $tmpProduct = new Product($product['id_product']);
+                    $priceDisplay                 = Product::getTaxCalculationMethod(
+                        (int) $this->context->cookie->id_customer
+                    );
+                    $productPrice                 = 0;
+
+                    if (!$priceDisplay || $priceDisplay == 2) {
+                        $productPrice = $tmpProduct->getPrice(
+                            true, null, 6
+                        );
+                    } elseif ($priceDisplay == 1) {
+                        $productPrice = $tmpProduct->getPrice(
+                            false, null, 6
+                        );
+                    }
+
+                    $product['price'] = $productPrice;
+                }
             }
         }
 

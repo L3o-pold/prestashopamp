@@ -40,19 +40,14 @@
 				</div>
 			{/if}
 
-			{strip}
-				<h1 id="category-name-amp"><a href="{$link->getCategoryLink($category->id_category, $category->link_rewrite)|escape:'html':'UTF-8'}">{$category->name|escape:'html':'UTF-8'}</a></h1>
-                {if isset($categoryNameComplement)}
-	                {$categoryNameComplement|escape:'html':'UTF-8'}
-	            {/if}
-	        {/strip}
-	        {if Tools::strlen($category->description) > 350}
-	            <div id="category_description_short" class="rte">{$description_short}</div>
-	            <div id="category_description_full" class="unvisible rte">{$category->description}</div>
-	            <a href="{$link->getCategoryLink($category->id_category, $category->link_rewrite)|escape:'html':'UTF-8'}" class="lnk_more">{l s='More' mod='amp'}</a>
-	        {else}
-	            <div class="rte width-full float-left">{$category->description}</div>
-	        {/if}
+			<h1 id="category-name-amp">
+				<a href="{$link->getCategoryLink($category->id_category, $category->link_rewrite)|escape:'html':'UTF-8'}">
+					{$category->name|escape:'html':'UTF-8'}
+				</a>
+			</h1>
+			<div class="rte width-full float-left">
+				{$category->clean_description|escape:'UTF-8'}
+			</div>
 	        <div class="width-full float-left">
 		        <div class="float-left pagination-text">
 					<span>
@@ -191,8 +186,14 @@
                             {$product.name|truncate:40:'...'|escape:'html':'UTF-8'}
 						</a>
 					</h5>
-					<p class="product-price-amp"><span>{convertPrice price=($product.price)}</span></p>
-					<p class="product-add-to-cart-amp {if $product.quantity == 0} disabled {/if}"><a class="btn btn-primary" {if $product.quantity == 0} href="#" {else} href="{$product.addToCartLink|escape:'html':'UTF-8'}" {/if}>{l s='Add to Cart' mod='amp'}</a>
+					<p class="product-price-amp">
+						<span>{convertPrice price=($product.price)}</span>
+					</p>
+					<p class="product-add-to-cart-amp {if $product.quantity == 0} disabled {/if}">
+						<a class="btn btn-primary" {if $product.quantity == 0} href="#" {else} href="{$product.addToCartLink|escape:'html':'UTF-8'}" {/if}>
+							{l s='Add to Cart' mod='amp'}
+						</a>
+					</p>
 				</div>
             {/foreach}
 		</div>
