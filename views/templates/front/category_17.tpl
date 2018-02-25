@@ -13,7 +13,7 @@
 			<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
         {/literal}
 		<style amp-custom>
-            {$css}
+            {$css nofilter}
         </style>
 	</head>
 	<body>
@@ -32,31 +32,22 @@
 			{if $category->id_image}
 				<div id="category-image-amp">
 					<amp-img src="{url entity='categoryImage' id=$category->id_category name='category_default'}"
-						width="870"
-						height="217"
+						width="141"
+						height="180"
 						layout="responsive"
 						alt="{$category->name}"></amp-img>
 					</amp-carousel>
 				</div>
 			{/if}
 
-			{strip}
-				<h1 id="category-name-amp">
-					<a href="{url entity='category' id=$category->id_category id_lang=$language.id}">{$category->name}</a>
-				</h1>
-                {if isset($categoryNameComplement)}
-	                {$categoryNameComplement}
-	            {/if}
-	        {/strip}
-	        {if Tools::strlen($category->description) > 350}
-	            <div id="category_description_short" class="rte">{$description_short nofilter}</div>
-	            <div id="category_description_full" class="unvisible rte">{$category->description nofilter}</div>
-	            <a href="{url entity='category' id=$category->id_category id_lang=$language.id}" class="lnk_more">
-					{l s='More' mod='amp'}
+			<h1 id="category-name-amp">
+				<a href="{url entity='category' id=$category->id_category id_lang=$language.id}">
+					{$category->name}
 				</a>
-	        {else}
-	            <div class="rte width-full float-left">{$category->description nofilter}</div>
-	        {/if}
+			</h1>
+			<div class="rte width-full float-left">
+				{$category->clean_description nofilter}
+			</div>
             {foreach from=$catProducts item=product}
 				<div class="float-left product-header">
 					<div>
@@ -72,8 +63,14 @@
                             {$product.name|truncate:40:'...'}
 						</a>
 					</h5>
-					{*<p class="product-price-amp"><span>{convertPrice price=($product.price)}</span></p>*}
-					<p class="product-add-to-cart-amp {if $product.quantity == 0} disabled {/if}"><a class="btn btn-primary" {if $product.quantity == 0} href="#" {else} href="{$product.addToCartLink}" {/if}>{l s='Add to Cart' mod='amp'}</a>
+					<p class="product-price-amp">
+						<span>{$product.price} {$currency.sign}</span>
+					</p>
+					<p class="product-add-to-cart-amp {if $product.quantity == 0} disabled {/if}">
+						<a class="btn btn-primary" {if $product.quantity == 0} href="#" {else} href="{$product.addToCartLink}" {/if}>
+							{l s='Add to Cart' mod='amp'}
+						</a>
+					</p>
 				</div>
             {/foreach}
 		</div>

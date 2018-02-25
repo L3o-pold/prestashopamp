@@ -17,7 +17,7 @@
         <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
 
         <style amp-custom>
-            {$css}
+            {$css nofilter}
         </style>
     </head>
     <body>
@@ -71,7 +71,7 @@
                 </h1>
                 <p>{l s='Reference' mod='amp'}: {$product->reference}</p>
                 <p>
-                    {$product->description nofilter}
+                    {$product->clean_description nofilter}
                 </p>
                 <p>
                     <span id="product-price-amp">

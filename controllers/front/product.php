@@ -73,6 +73,8 @@ class AmpProductModuleFrontController extends ModuleFrontController
             $this->context->smarty->assign('images', $product_images);
         }
 
+        $product->clean_description = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $product->description);
+
         $this->context->smarty->assign('canonical', $link->getProductLink($product->id, $product->link_rewrite));
         $this->context->smarty->assign('meta_datas', Meta::getProductMetas($product->id, Context::getContext()->language->id, 'product'));
         $this->context->smarty->assign('product', $product);
