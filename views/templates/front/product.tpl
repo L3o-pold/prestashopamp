@@ -77,11 +77,11 @@
                     </amp-carousel>
                 </div>
                 <h1 id="product-name-amp">
-                    {$product->name}
+                    {$product->name|escape:'html':'UTF-8'}
                 </h1>
-                <p>{l s='Reference' mod='amp'}: {$product->reference}</p>
+                <p>{l s='Reference' mod='amp'}: {$product->reference|escape:'html':'UTF-8'}</p>
                 <p>
-                    {$product->description}
+                    {$product->clean_description|escape:'UTF-8'}
                 </p>
                 <p>
                     <span id="product-price-amp">
@@ -91,7 +91,7 @@
                 <p id="product-add-to-cart-amp">
                     {capture}add=1&amp;id_product={$product->id|intval}{if isset($static_token)}&amp;token={$static_token}{/if}{/capture}
                     <a href="{$link->getPageLink('cart', true, NULL, $smarty.capture.default, false)|escape:'html':'UTF-8'}" class="btn btn-primary">
-                    {l s='Buy now' mod='amp'}
+                        {l s='Buy now' mod='amp'}
                     </a>
                 </p>
             </div>
