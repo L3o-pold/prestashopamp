@@ -1,8 +1,29 @@
 <?php
+/**
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
+ * @copyright Léopold Jacquot
+ * @license  MIT
+ **/
 
 /**
- * @package prestashopamp
  * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
+ * @copyright Léopold Jacquot
+ * @license  MIT
+ * @package prestashopamp
  */
 class AmpProductModuleFrontController extends ModuleFrontController
 {
@@ -80,7 +101,7 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign('product', $product);
         $this->context->smarty->assign('link', $link);
         $this->context->smarty->assign('cover', Product::getCover((int) $product->id));
-        $this->context->smarty->assign('css', file_get_contents(__DIR__.'/../../css/amp.css'));
+        $this->context->smarty->assign('css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css'));
 
         if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
             $priceDisplay = Product::getTaxCalculationMethod((int) $this->context->cookie->id_customer);
@@ -100,7 +121,7 @@ class AmpProductModuleFrontController extends ModuleFrontController
                     'price' => $productPrice,
                     'priceDisplay' => $priceDisplay,
                     'productPriceWithoutReduction' => $productPriceWithoutReduction,
-                    'addToCartLink' => $link->getPageLink('cart', true, $this->context->language->id, ['add' => 1, 'id_product' => $product->id, 'token' => Tools::getToken(false)], false, $this->context->shop->id)
+                    'addToCartLink' => $link->getPageLink('cart', true, $this->context->language->id, array('add' => 1, 'id_product' => $product->id, 'token' => Tools::getToken(false)), false, $this->context->shop->id)
                 )
             );
 
@@ -113,10 +134,10 @@ class AmpProductModuleFrontController extends ModuleFrontController
     }
 
     /**
-     * @return bool|void
+     * @return bool
      */
     public function setMedia()
     {
-        return;
+        return false;
     }
 }
