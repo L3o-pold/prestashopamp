@@ -1,8 +1,26 @@
 <?php
+/**
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
+ * @copyright Léopold Jacquot
+ * @license  MIT
+ **/
 
 /**
  * @package prestashopamp
- * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
  */
 class Amp extends Module
 {
@@ -16,12 +34,13 @@ class Amp extends Module
      */
     public function __construct()
     {
-        $this->name          = 'amp';
-        $this->version       = '2.0.7';
-        $this->author        = 'Leopold Jacquot';
-        $this->need_instance = 0;
-        $this->bootstrap     = true;
+        $this->name                   = 'amp';
+        $this->version                = '2.0.8';
+        $this->author                 = 'Leopold Jacquot';
+        $this->need_instance          = 0;
+        $this->bootstrap              = true;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => '1.7.99.99');
+        $this->tab                    = 'front_office_features';
 
         parent::__construct();
 
@@ -64,7 +83,7 @@ class Amp extends Module
                 }
 
                 $cacheId = 'amp_header|product|'.$product->id;
-                $ampLink = $this->context->link->getModuleLink('amp', 'product', ['idProduct' => $product->id], true, $this->context->language->id, $this->context->shop->id, true);
+                $ampLink = $this->context->link->getModuleLink('amp', 'product', array('idProduct' => $product->id), true, $this->context->language->id, $this->context->shop->id, true);
 
                 break;
 
@@ -76,17 +95,15 @@ class Amp extends Module
                 }
 
                 $cacheId = 'amp_header|category|'.$category->id;
-                $ampLink = $this->context->link->getModuleLink('amp', 'category', ['idCategory' => $category->id], true, $this->context->language->id, $this->context->shop->id, true);
+                $ampLink = $this->context->link->getModuleLink('amp', 'category', array('idCategory' => $category->id), true, $this->context->language->id, $this->context->shop->id, true);
 
                 break;
 
             default:
                 return '';
-                break;
         }
 
-        if (!$this->isCached('amp_header.tpl', $this->getCacheId($cacheId)))
-        {
+        if (!$this->isCached('amp_header.tpl', $this->getCacheId($cacheId))) {
             $this->context->smarty->assign(array('amp_link' => $ampLink,));
         }
 

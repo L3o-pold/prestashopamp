@@ -1,8 +1,29 @@
 <?php
+/**
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
+ * @copyright Léopold Jacquot
+ * @license  MIT
+ **/
 
 /**
- * @package prestashopamp
  * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
+ * @copyright Léopold Jacquot
+ * @license  MIT
+ * @package prestashopamp
  */
 class AmpCategoryModuleFrontController extends ModuleFrontController
 {
@@ -61,23 +82,17 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         // if products available get product add to cart link
         if ($this->cat_products) {
             foreach ($this->cat_products as &$product) {
-                $product['addToCartLink'] = $link->getPageLink('cart', true, $idLang, ['add' => 1, 'id_product' => $product['id_product'], 'token' => Tools::getToken(false)], false, $idShop);
+                $product['addToCartLink'] = $link->getPageLink('cart', true, $idLang, array('add' => 1, 'id_product' => $product['id_product'], 'token' => Tools::getToken(false)), false, $idShop);
 
                 if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
                     $tmpProduct = new Product($product['id_product']);
-                    $priceDisplay                 = Product::getTaxCalculationMethod(
-                        (int) $this->context->cookie->id_customer
-                    );
+                    $priceDisplay = Product::getTaxCalculationMethod($this->context->cookie->id_customer);
                     $productPrice                 = 0;
 
                     if (!$priceDisplay || $priceDisplay == 2) {
-                        $productPrice = $tmpProduct->getPrice(
-                            true, null, 6
-                        );
+                        $productPrice = $tmpProduct->getPrice(true, null, 6);
                     } elseif ($priceDisplay == 1) {
-                        $productPrice = $tmpProduct->getPrice(
-                            false, null, 6
-                        );
+                        $productPrice = $tmpProduct->getPrice(false, null, 6);
                     }
 
                     $product['price'] = $productPrice;
@@ -109,14 +124,10 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         }
 
         $smartyVars['homePageLink'] = $link->getPageLink('index', true, $idLang, null, false, $smartyVars['idShop']);
-        $this->context->smarty->assign('meta_datas', Meta::getCategoryMetas($idCategory, $this->context->language->id, 'category'));
-        $this->context->smarty->assign('css', file_get_contents(__DIR__.'/../../css/amp.css'));
-
+        $this->context->smarty->assign('css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css'));
         $this->context->smarty->assign($smartyVars);
-
         $this->context->smarty->assign('canonical', $smartyVars['categoryLink']);
         $this->context->smarty->assign('meta_datas', Meta::getCategoryMetas($this->category->id, Context::getContext()->language->id, 'category'));
-        $this->context->smarty->assign('css', file_get_contents(__DIR__.'/../../css/amp.css'));
 
         if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
             $this->setTemplate('module:amp/views/templates/front/category_17.tpl');
