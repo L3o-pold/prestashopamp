@@ -97,7 +97,7 @@
                 {if !$configuration.is_catalog}
                     <p id="product-add-to-cart-amp">
                         <a href="{$addToCartLink}" class="btn btn-primary">
-                            {l s='Buy now' mod='amp'}
+                            {l s='Add to cart' mod='amp'}
                         </a>
                     </p>
                 {/if}

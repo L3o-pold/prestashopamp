@@ -94,7 +94,12 @@ class AmpProductModuleFrontController extends ModuleFrontController
             $this->context->smarty->assign('images', $product_images);
         }
 
+        /**
+         * @todo Move this to an helper
+         */
         $product->clean_description = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $product->description);
+        $product->clean_description = preg_replace('/<img[^>]+\>/i', '', $product->clean_description);
+        $product->clean_description = preg_replace('/<iframe.*?\/iframe>/i', '', $product->clean_description);
 
         $this->context->smarty->assign('canonical', $link->getProductLink($product->id, $product->link_rewrite));
         $this->context->smarty->assign('meta_datas', Meta::getProductMetas($product->id, Context::getContext()->language->id, 'product'));
@@ -103,6 +108,9 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign('cover', Product::getCover((int) $product->id));
         $this->context->smarty->assign('css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css'));
 
+        /**
+         * @todo Find a better way to handle price in PS 1.7
+         */
         if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
             $priceDisplay = Product::getTaxCalculationMethod((int) $this->context->cookie->id_customer);
             $productPrice = 0;
