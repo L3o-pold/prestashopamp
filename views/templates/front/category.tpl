@@ -207,7 +207,7 @@
 					</p>
 					<p class="product-add-to-cart-amp {if $product.quantity == 0} disabled {/if}">
 						<a class="btn btn-primary" {if $product.quantity == 0} href="#" {else} href="{$product.addToCartLink|escape:'html':'UTF-8'}" {/if}>
-							{l s='Add to Cart' mod='amp'}
+							{l s='Add to cart' mod='amp'}
 						</a>
 					</p>
 				</div>
