@@ -107,7 +107,7 @@
                 <p id="product-add-to-cart-amp">
                     {capture}add=1&amp;id_product={$product->id|intval}{if isset($static_token)}&amp;token={$static_token}{/if}{/capture}
                     <a href="{$link->getPageLink('cart', true, NULL, $smarty.capture.default, false)|escape:'html':'UTF-8'}" class="btn btn-primary">
-                        {l s='Buy now' mod='amp'}
+                        {l s='Add to cart' mod='amp'}
                     </a>
                 </p>
             </div>

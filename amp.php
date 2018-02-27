@@ -35,7 +35,7 @@ class Amp extends Module
     public function __construct()
     {
         $this->name                   = 'amp';
-        $this->version                = '2.0.8';
+        $this->version                = '2.0.9';
         $this->author                 = 'Leopold Jacquot';
         $this->need_instance          = 0;
         $this->bootstrap              = true;
@@ -54,6 +54,11 @@ class Amp extends Module
      */
     public function install()
     {
+        if (Configuration::get('PS_JS_DEFER')) {
+            $this->_errors[] = $this->l('This module needs to have the option Move JavaScript to the end of the HTML document disabled in Advanced settings / Optimization menu');
+            return false;
+        }
+
         return parent::install() && $this->registerHook('displayHeader');
     }
 

@@ -46,7 +46,12 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
 
         $this->category = new Category($idCategory, $idLang, $idShop);
 
+        /**
+         * @todo Move this to an helper
+         */
         $this->category->clean_description = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $this->category->description);
+        $this->category->clean_description = preg_replace('/<img[^>]+\>/i', '', $this->category->clean_description);
+        $this->category->clean_description = preg_replace('/<iframe.*?\/iframe>/i', '', $this->category->clean_description);
 
         if (!Validate::isLoadedObject($this->category)) {
             Controller::getController('PageNotFoundController')->run();
@@ -84,6 +89,9 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
             foreach ($this->cat_products as &$product) {
                 $product['addToCartLink'] = $link->getPageLink('cart', true, $idLang, array('add' => 1, 'id_product' => $product['id_product'], 'token' => Tools::getToken(false)), false, $idShop);
 
+                /**
+                 * @todo Find a better way to handle price in PS 1.7
+                 */
                 if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
                     $tmpProduct = new Product($product['id_product']);
                     $priceDisplay = Product::getTaxCalculationMethod($this->context->cookie->id_customer);
@@ -100,6 +108,9 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
             }
         }
 
+        /**
+         * @todo Clean smarty vars
+         */
         $smartyVars = array();
         $smartyVars['idLang'] = $idLang;
         $smartyVars['idShop'] = $idShop;
