@@ -148,4 +148,12 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
 
         parent::initContent();
     }
+
+    /**
+     * @return bool
+     */
+    public function setMedia()
+    {
+        return false;
+    }
 }
