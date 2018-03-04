@@ -156,4 +156,26 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
     {
         return false;
     }
+
+    /**
+     * Renders controller templates and generates page content
+     *
+     * @param array|string $content Template file(s) to be rendered
+     *
+     * @throws Exception
+     * @throws SmartyException
+     */
+    protected function smartyOutputContent($content)
+    {
+        if (!Configuration::get('PS_JS_DEFER')) {
+            parent::smartyOutputContent($content);
+            return;
+        }
+
+        Configuration::set('PS_JS_DEFER', 0);
+
+        parent::smartyOutputContent($content);
+
+        Configuration::set('PS_JS_DEFER', 1);
+    }
 }
