@@ -118,6 +118,9 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $product->clean_description = preg_replace(
             '/<iframe.*?\/iframe>/i', '', $product->clean_description
         );
+        $product->clean_description = preg_replace(
+            '/<video.*?\/video>/i', '', $product->clean_description
+        );
 
         $this->context->smarty->assign(
             'canonical', $link->getProductLink($product->id, $product->link_rewrite)
