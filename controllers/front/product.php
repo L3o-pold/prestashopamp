@@ -113,6 +113,12 @@ class AmpProductModuleFrontController extends ModuleFrontController
             '/(<[^>]+) style=".*?"/i', '$1', $product->description
         );
         $product->clean_description = preg_replace(
+            '/(<[^>]+) xml\:lang=".*?"/i', '$1', $product->description
+        );
+        $product->clean_description = preg_replace(
+            '/(<[^>]+) lang=".*?"/i', '$1', $product->description
+        );
+        $product->clean_description = preg_replace(
             '/<img[^>]+\>/i', '', $product->clean_description
         );
         $product->clean_description = preg_replace(
@@ -181,7 +187,7 @@ class AmpProductModuleFrontController extends ModuleFrontController
             $this->setTemplate('product.tpl');
         }
 
-        parent::initContent();;
+        parent::initContent();
     }
 
     /**

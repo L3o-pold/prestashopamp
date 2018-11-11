@@ -35,7 +35,7 @@ class Amp extends Module
     public function __construct()
     {
         $this->name                   = 'amp';
-        $this->version                = '2.0.12';
+        $this->version                = '2.0.13';
         $this->author                 = 'Leopold Jacquot';
         $this->need_instance          = 0;
         $this->bootstrap              = true;
@@ -54,6 +54,25 @@ class Amp extends Module
      */
     public function install()
     {
+        /**
+         * Prevent Facebook Pixel official module incompatibility
+         *
+         * @link https://github.com/L3o-pold/prestashopamp/issues/6
+         */
+        if (version_compare(_PS_VERSION_, '1.7.0', '>=') && Module::isEnabled('pspixel')) {
+            $module = Module::getInstanceByName('pspixel');
+            $headerHookId = Hook::getIdByName('header');
+            $redirections = $module->getExceptions($headerHookId);
+
+            if (!in_array('module-amp-product', $redirections)) {
+                $module->registerExceptions($headerHookId, ['module-amp-product']);
+            }
+
+            if (!in_array('module-amp-category', $redirections)) {
+                $module->registerExceptions($headerHookId, ['module-amp-category']);
+            }
+        }
+
         return parent::install() && $this->registerHook('displayHeader');
     }
 
