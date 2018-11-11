@@ -187,7 +187,7 @@ class AmpProductModuleFrontController extends ModuleFrontController
             $this->setTemplate('product.tpl');
         }
 
-        parent::initContent();;
+        parent::initContent();
     }
 
     /**
