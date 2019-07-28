@@ -18,9 +18,10 @@
 <html amp>
 	<head>
 		<meta charset="utf-8">
-		<title>
-            {$meta_datas['meta_title']}
-        </title>
+		<title>{$meta_datas['meta_title']}</title>
+		{if isset($meta_datas['meta_description'])}
+			<meta name="description" content="{$meta_datas['meta_description']}">
+		{/if}
         <link rel="canonical" href="{$canonical}">
 		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         {literal}
