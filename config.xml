@@ -2,7 +2,7 @@
 <module>
 	<name>amp</name>
 	<displayName><![CDATA[AMP]]></displayName>
-	<version><![CDATA[2.0.14]]></version>
+	<version><![CDATA[2.0.15]]></version>
 	<description><![CDATA[This module add AMP to product and category pages]]></description>
 	<author><![CDATA[Leopold Jacquot]]></author>
 	<tab><![CDATA[front_office_features]]></tab>
