@@ -55,6 +55,7 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         $this->category->clean_description = preg_replace('/<img[^>]+\>/i', '', $this->category->clean_description);
         $this->category->clean_description = preg_replace('/<iframe.*?\/iframe>/i', '', $this->category->clean_description);
         $this->category->clean_description = preg_replace('/<video.*?\/video>/i', '', $this->category->clean_description);
+        $this->category->clean_description = preg_replace('/<font.*?\/font>/i', '', $this->category->clean_description);
 
         if (!Validate::isLoadedObject($this->category)) {
             Controller::getController('PageNotFoundController')->run();
