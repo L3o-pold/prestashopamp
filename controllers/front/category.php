@@ -20,13 +20,18 @@
  **/
 
 /**
- * @author  Léopold Jacquot {@link https://www.leopoldjacquot.com}
+ * @author    Léopold Jacquot {@link https://www.leopoldjacquot.com}
  * @copyright Léopold Jacquot
- * @license  MIT
- * @package prestashopamp
+ * @license   MIT
+ * @package   prestashopamp
  */
 class AmpCategoryModuleFrontController extends ModuleFrontController
 {
+    /**
+     * @var string
+     */
+    public $controller_name = 'category';
+
     /**
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
