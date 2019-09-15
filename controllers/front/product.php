@@ -28,6 +28,11 @@
 class AmpProductModuleFrontController extends ModuleFrontController
 {
     /**
+     * @var string
+     */
+    public $controller_name = 'product';
+
+    /**
      * @throws PrestaShopException
      */
     public function initContent()
