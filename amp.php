@@ -35,7 +35,7 @@ class Amp extends Module
     public function __construct()
     {
         $this->name                   = 'amp';
-        $this->version                = '2.0.17';
+        $this->version                = '2.0.18';
         $this->author                 = 'Leopold Jacquot';
         $this->need_instance          = 0;
         $this->bootstrap              = true;
