@@ -149,9 +149,15 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign(
             'cover', Product::getCover((int) $product->id)
         );
-        $this->context->smarty->assign(
-            'css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css')
-        );
+        if (file_exists(_PS_THEME_DIR_.'modules/amp/views/css/amp.css')) {
+            $this->context->smarty->assign(
+                'css', Tools::file_get_contents(_PS_THEME_DIR_.'modules/amp/views/css/amp.css')
+            );
+        } else {
+            $this->context->smarty->assign(
+                'css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css')
+            );
+        }
 
         /**
          * @todo Find a better way to handle price in PS 1.7

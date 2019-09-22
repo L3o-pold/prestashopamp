@@ -144,7 +144,15 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         }
 
         $smartyVars['homePageLink'] = $link->getPageLink('index', true, $idLang, null, false, $smartyVars['idShop']);
-        $this->context->smarty->assign('css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css'));
+        if (file_exists(_PS_THEME_DIR_.'modules/amp/views/css/amp.css')) {
+            $this->context->smarty->assign(
+                'css', Tools::file_get_contents(_PS_THEME_DIR_.'modules/amp/views/css/amp.css')
+            );
+        } else {
+            $this->context->smarty->assign(
+                'css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css')
+            );
+        }
         $this->context->smarty->assign($smartyVars);
         $this->context->smarty->assign('canonical', $smartyVars['categoryLink']);
         $this->context->smarty->assign('meta_datas', Meta::getCategoryMetas($this->category->id, Context::getContext()->language->id, 'category'));
