@@ -107,9 +107,9 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
                     $productPrice                 = 0;
 
                     if (!$priceDisplay || $priceDisplay == 2) {
-                        $productPrice = $tmpProduct->getPrice(true, null, 6);
+                        $productPrice = Tools::ps_round($tmpProduct->getPrice(true, null, 6), 2);
                     } elseif ($priceDisplay == 1) {
-                        $productPrice = $tmpProduct->getPrice(false, null, 6);
+                        $productPrice = Tools::ps_round($tmpProduct->getPrice(false, null, 6), 2);
                     }
 
                     $product['price'] = $productPrice;

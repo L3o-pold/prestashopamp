@@ -170,15 +170,15 @@ class AmpProductModuleFrontController extends ModuleFrontController
             $productPriceWithoutReduction = 0;
 
             if (!$priceDisplay || $priceDisplay == 2) {
-                $productPrice                 = $product->getPrice(true, null, 6);
-                $productPriceWithoutReduction = $product->getPriceWithoutReduct(
+                $productPrice                 = Tools::ps_round($product->getPrice(true, null), 2);
+                $productPriceWithoutReduction = Tools::ps_round($product->getPriceWithoutReduct(
                     false, null
-                );
+                ), 2);
             } elseif ($priceDisplay == 1) {
-                $productPrice                 = $product->getPrice(false, null, 6);
-                $productPriceWithoutReduction = $product->getPriceWithoutReduct(
+                $productPrice                 = Tools::ps_round($product->getPrice(false, null, 6), 2);
+                $productPriceWithoutReduction = Tools::ps_round($product->getPriceWithoutReduct(
                     true, null
-                );
+                ), 2);
             }
 
             $this->context->smarty->assign(
