@@ -149,9 +149,15 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign(
             'cover', Product::getCover((int) $product->id)
         );
-        $this->context->smarty->assign(
-            'css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css')
-        );
+        if (file_exists(_PS_THEME_DIR_.'modules/amp/views/css/amp.css')) {
+            $this->context->smarty->assign(
+                'css', Tools::file_get_contents(_PS_THEME_DIR_.'modules/amp/views/css/amp.css')
+            );
+        } else {
+            $this->context->smarty->assign(
+                'css', Tools::file_get_contents(_PS_MODULE_DIR_.'amp/views/css/amp.css')
+            );
+        }
 
         /**
          * @todo Find a better way to handle price in PS 1.7
@@ -164,15 +170,15 @@ class AmpProductModuleFrontController extends ModuleFrontController
             $productPriceWithoutReduction = 0;
 
             if (!$priceDisplay || $priceDisplay == 2) {
-                $productPrice                 = $product->getPrice(true, null, 6);
-                $productPriceWithoutReduction = $product->getPriceWithoutReduct(
+                $productPrice                 = Tools::ps_round($product->getPrice(true, null), 2);
+                $productPriceWithoutReduction = Tools::ps_round($product->getPriceWithoutReduct(
                     false, null
-                );
+                ), 2);
             } elseif ($priceDisplay == 1) {
-                $productPrice                 = $product->getPrice(false, null, 6);
-                $productPriceWithoutReduction = $product->getPriceWithoutReduct(
+                $productPrice                 = Tools::ps_round($product->getPrice(false, null, 6), 2);
+                $productPriceWithoutReduction = Tools::ps_round($product->getPriceWithoutReduct(
                     true, null
-                );
+                ), 2);
             }
 
             $this->context->smarty->assign(
