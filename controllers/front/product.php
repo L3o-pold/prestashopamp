@@ -135,15 +135,18 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $product->clean_description = preg_replace(
             '/<font.*?\/font>/i', '', $product->clean_description
         );
-
         $this->context->smarty->assign(
             'canonical', $link->getProductLink($product->id, $product->link_rewrite)
         );
-        $this->context->smarty->assign(
-            'meta_datas', Meta::getProductMetas(
-            $product->id, Context::getContext()->language->id, 'product'
-        )
-        );
+        $metaDatas = Meta::getProductMetas($product->id, Context::getContext()->language->id, 'product');
+        if (isset($metaDatas['meta_description'])) {
+            $metaDatas['meta_description'] = htmlentities($metaDatas['meta_description']);
+        }
+        if (isset($metaDatas['meta_title'])) {
+            $metaDatas['meta_title'] = htmlentities($metaDatas['meta_title']);
+        }
+        $this->context->smarty->assign('meta_datas', $metaDatas);
+
         $this->context->smarty->assign('product', $product);
         $this->context->smarty->assign('link', $link);
         $this->context->smarty->assign(

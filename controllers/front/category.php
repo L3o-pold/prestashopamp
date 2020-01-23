@@ -155,7 +155,15 @@ class AmpCategoryModuleFrontController extends ModuleFrontController
         }
         $this->context->smarty->assign($smartyVars);
         $this->context->smarty->assign('canonical', $smartyVars['categoryLink']);
-        $this->context->smarty->assign('meta_datas', Meta::getCategoryMetas($this->category->id, Context::getContext()->language->id, 'category'));
+        $metaDatas = Meta::getCategoryMetas($this->category->id, Context::getContext()->language->id, 'category');
+
+        if (isset($metaDatas['meta_description'])) {
+            $metaDatas['meta_description'] = htmlentities($metaDatas['meta_description']);
+        }
+        if (isset($metaDatas['meta_title'])) {
+            $metaDatas['meta_title'] = htmlentities($metaDatas['meta_title']);
+        }
+        $this->context->smarty->assign('meta_datas', $metaDatas);
 
         if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
             $this->setTemplate('module:amp/views/templates/front/category_17.tpl');
