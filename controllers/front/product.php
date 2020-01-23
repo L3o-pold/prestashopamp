@@ -118,10 +118,10 @@ class AmpProductModuleFrontController extends ModuleFrontController
             '/(<[^>]+) style=".*?"/i', '$1', $product->description
         );
         $product->clean_description = preg_replace(
-            '/(<[^>]+) xml\:lang=".*?"/i', '$1', $product->description
+            '/(<[^>]+) xml\:lang=".*?"/i', '$1', $product->clean_description
         );
         $product->clean_description = preg_replace(
-            '/(<[^>]+) lang=".*?"/i', '$1', $product->description
+            '/(<[^>]+) lang=".*?"/i', '$1', $product->clean_description
         );
         $product->clean_description = preg_replace(
             '/<img[^>]+\>/i', '', $product->clean_description
