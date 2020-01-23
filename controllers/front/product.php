@@ -120,6 +120,7 @@ class AmpProductModuleFrontController extends ModuleFrontController
         $product->clean_description = preg_replace(
             '/(<[^>]+) xml\:lang=".*?"/i', '$1', $product->clean_description
         );
+
         $product->clean_description = preg_replace(
             '/(<[^>]+) lang=".*?"/i', '$1', $product->clean_description
         );
@@ -134,6 +135,9 @@ class AmpProductModuleFrontController extends ModuleFrontController
         );
         $product->clean_description = preg_replace(
             '/<font.*?\/font>/i', '', $product->clean_description
+        );
+        $product->clean_description = preg_replace(
+            '/<col(.*?)>.*<\/col>/i', '$1', $product->clean_description
         );
         $this->context->smarty->assign(
             'canonical', $link->getProductLink($product->id, $product->link_rewrite)
